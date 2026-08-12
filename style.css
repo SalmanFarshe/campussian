@@ -1,0 +1,25 @@
+/*
+Theme Name: Campussian
+Theme URI: https://salmanfarshe.me
+Author: WhyCodeBD
+Author URI: https://salmanfarshe.me
+Description: Campussian is a 100% standalone, modern school WordPress theme by WhyCodeBD. Built with Bootstrap 5 and AOS animations, it ships a rich homepage, notice board, events, admission, gallery and dashboard-preview templates, a native Light/Dark mode toggle and a fully-featured Customizer. No external plugin dependencies required for core presentation.
+Version: 1.0.0
+Requires at least: 5.8
+Tested up to: 6.2
+Requires PHP: 7.4
+License: GNU General Public License v2 or later
+License URI: http://www.gnu.org/licenses/gpl-2.0.html
+Text Domain: campussian
+Tags: education, school, custom-colors, custom-logo, custom-menu, featured-images, full-width-template, translation-ready, threaded-comments, dark-mode, bootstrap
+*/
+
+/*
+ * ---------------------------------------------------------------------------
+ * Campussian (CMPSIAN) by WhyCodeBD
+ * ---------------------------------------------------------------------------
+ * This file only carries the required WordPress theme header. All presentation
+ * styles are compiled into /assets/css/campussian.css and enqueued from
+ * inc/enqueue.php for better caching and separation of concerns.
+ * ---------------------------------------------------------------------------
+ */
