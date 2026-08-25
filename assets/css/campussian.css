@@ -216,14 +216,14 @@ body.cmpsian-theme {
 .cmpsian-btn--teal,
 .cmpsian-btn--green {
 	background: var(--cmpsian-orange);
-	color: #ffffff;
+	color: #ffffff !important;
 }
 
 .cmpsian-btn--orange:hover,
 .cmpsian-btn--teal:hover,
 .cmpsian-btn--green:hover {
 	background: #ffffff;
-	color: var(--cmpsian-orange);
+	color: var(--cmpsian-orange) !important;
 	box-shadow: 0 8px 20px rgba(237, 139, 49, .25);
 }
 
@@ -232,14 +232,14 @@ body.cmpsian-theme {
 .cmpsian-btn--ghost {
 	background: transparent;
 	border-color: var(--cmpsian-orange);
-	color: var(--cmpsian-orange);
+	color: var(--cmpsian-orange) !important;
 }
 
 .cmpsian-btn--outline:hover,
 .cmpsian-btn--ghost:hover {
 	background: var(--cmpsian-orange);
 	border-color: var(--cmpsian-orange);
-	color: #ffffff;
+	color: #ffffff !important;
 	box-shadow: 0 8px 20px rgba(237, 139, 49, .25);
 }
 
@@ -253,7 +253,7 @@ body.cmpsian-theme {
 .cmpsian-btn--outline-green:hover {
 	background: var(--cmpsian-green);
 	border-color: var(--cmpsian-green);
-	color: #ffffff;
+	color: #ffffff !important;
 }
 
 .cmpsian-btn--sm {
@@ -311,12 +311,12 @@ body.cmpsian-theme {
 	display: inline-flex;
 	align-items: center;
 	gap: 7px;
-	color: #ffffff;
+	color: #ffffff !important;
 	font-weight: 500;
 }
 
 .cmpsian-utility-item:hover {
-	color: #fff3e6;
+	color: var(--cmpsian-teal-dark) !important;
 }
 
 .cmpsian-utility-item__icon {
@@ -1205,6 +1205,16 @@ body.cmpsian-theme {
 	margin: 0;
 	max-width: 620px;
 	color: rgba(255, 255, 255, .92);
+}
+
+.cmpsian-cta__inner .cmpsian-btn--orange-cta {
+	background: #fff;
+	color: var(--cmpsian-heading);
+}
+
+.cmpsian-cta__inner .cmpsian-btn--orange-cta:hover {
+	background: var(--cmpsian-teal-dark);
+	color: #fff;
 }
 
 .cmpsian-cta__inner .cmpsian-btn--orange {
