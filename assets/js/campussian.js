@@ -63,6 +63,29 @@
 	}
 
 	/* ------------------------------------------------------------------ *
+	 * 7. Preloader
+	 * ------------------------------------------------------------------ */
+	function initPreloader() {
+		var preloader = document.getElementById( 'cmpsianPreloader' );
+
+		if ( ! preloader ) {
+			return;
+		}
+
+		function hide() {
+			preloader.classList.add( 'is-hidden' );
+		}
+
+		if ( document.readyState === 'complete' ) {
+			hide();
+		} else {
+			window.addEventListener( 'load', hide );
+			// Safety fallback: never block the page for more than 3s.
+			setTimeout( hide, 3000 );
+		}
+	}
+
+	/* ------------------------------------------------------------------ *
 	 * 3. Animated counters
 	 * ------------------------------------------------------------------ */
 	function animateCounter( el ) {
@@ -119,7 +142,7 @@
 	}
 
 	/* ------------------------------------------------------------------ *
-	 * 4. Gallery lightbox (dependency-free)
+	 * 4. Gallery lightbox (dependency-free, with prev/next controls)
 	 * ------------------------------------------------------------------ */
 	function initLightbox() {
 		var galleries = document.querySelectorAll( '[data-cmpsian-lightbox]' );
@@ -128,12 +151,14 @@
 			return;
 		}
 
-		// Build a single reusable overlay.
+		// Build a single reusable overlay with prev/next controls.
 		var overlay = document.createElement( 'div' );
 		overlay.className = 'cmpsian-lightbox';
 		overlay.setAttribute( 'aria-hidden', 'true' );
 		overlay.innerHTML =
 			'<button type="button" class="cmpsian-lightbox__close" aria-label="Close">&times;</button>' +
+			'<button type="button" class="cmpsian-lightbox__nav cmpsian-lightbox__nav--prev" aria-label="Previous">&#10094;</button>' +
+			'<button type="button" class="cmpsian-lightbox__nav cmpsian-lightbox__nav--next" aria-label="Next">&#10095;</button>' +
 			'<figure class="cmpsian-lightbox__figure">' +
 			'<img class="cmpsian-lightbox__img" src="" alt="" />' +
 			'<figcaption class="cmpsian-lightbox__caption"></figcaption>' +
@@ -143,11 +168,36 @@
 		var imgEl     = overlay.querySelector( '.cmpsian-lightbox__img' );
 		var captionEl = overlay.querySelector( '.cmpsian-lightbox__caption' );
 		var closeEl   = overlay.querySelector( '.cmpsian-lightbox__close' );
+		var prevEl    = overlay.querySelector( '.cmpsian-lightbox__nav--prev' );
+		var nextEl    = overlay.querySelector( '.cmpsian-lightbox__nav--next' );
 
-		function open( src, caption ) {
-			imgEl.setAttribute( 'src', src );
-			imgEl.setAttribute( 'alt', caption || '' );
-			captionEl.textContent = caption || '';
+		var currentIndex = 0;
+		var items        = [];
+
+		function collectItems() {
+			items = [];
+			galleries.forEach( function ( gallery ) {
+				var links = gallery.querySelectorAll( '.cmpsian-masonry__link' );
+				links.forEach( function ( link ) {
+					items.push( {
+						src: link.getAttribute( 'href' ),
+						caption: link.getAttribute( 'data-caption' ) || ''
+					} );
+				} );
+			} );
+		}
+
+		function open( index ) {
+			if ( index < 0 ) {
+				index = items.length - 1;
+			} else if ( index >= items.length ) {
+				index = 0;
+			}
+			currentIndex = index;
+			var item = items[ currentIndex ];
+			imgEl.setAttribute( 'src', item.src );
+			imgEl.setAttribute( 'alt', item.caption );
+			captionEl.textContent = item.caption;
 			overlay.classList.add( 'is-open' );
 			overlay.setAttribute( 'aria-hidden', 'false' );
 			document.body.classList.add( 'cmpsian-no-scroll' );
@@ -160,6 +210,8 @@
 			imgEl.setAttribute( 'src', '' );
 		}
 
+		collectItems();
+
 		galleries.forEach( function ( gallery ) {
 			gallery.addEventListener( 'click', function ( e ) {
 				var link = e.target.closest( '.cmpsian-masonry__link' );
@@ -167,10 +219,24 @@
 					return;
 				}
 				e.preventDefault();
-				open( link.getAttribute( 'href' ), link.getAttribute( 'data-caption' ) );
+				// Find the clicked link's index in the collected items.
+				var index = 0;
+				for ( var i = 0; i < items.length; i++ ) {
+					if ( items[ i ].src === link.getAttribute( 'href' ) ) {
+						index = i;
+						break;
+					}
+				}
+				open( index );
 			} );
 		} );
 
+		prevEl.addEventListener( 'click', function () {
+			open( currentIndex - 1 );
+		} );
+		nextEl.addEventListener( 'click', function () {
+			open( currentIndex + 1 );
+		} );
 		closeEl.addEventListener( 'click', close );
 		overlay.addEventListener( 'click', function ( e ) {
 			if ( e.target === overlay ) {
@@ -178,8 +244,15 @@
 			}
 		} );
 		document.addEventListener( 'keyup', function ( e ) {
-			if ( 'Escape' === e.key && overlay.classList.contains( 'is-open' ) ) {
+			if ( ! overlay.classList.contains( 'is-open' ) ) {
+				return;
+			}
+			if ( 'Escape' === e.key ) {
 				close();
+			} else if ( 'ArrowLeft' === e.key ) {
+				open( currentIndex - 1 );
+			} else if ( 'ArrowRight' === e.key ) {
+				open( currentIndex + 1 );
 			}
 		} );
 	}
@@ -214,6 +287,7 @@
 	 * Boot
 	 * ------------------------------------------------------------------ */
 	function boot() {
+		initPreloader();
 		initThemeToggle();
 		initAOS();
 		initCounters();

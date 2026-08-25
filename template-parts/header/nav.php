@@ -41,7 +41,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 				)
 			);
 			?>
+			<div class="cmpsian-navbar__account ms-lg-3">
+				<?php cmpsian_account_menu(); ?>
+			</div>
 		</div>
-
 	</div>
 </nav>

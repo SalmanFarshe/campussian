@@ -54,5 +54,7 @@ require_once WCBD_CAMPUSSIAN_DIR . 'inc/customizer.php';          // Customizer 
 require_once WCBD_CAMPUSSIAN_DIR . 'inc/cpt.php';                 // Notice & Event custom post types + meta.
 require_once WCBD_CAMPUSSIAN_DIR . 'inc/template-tags.php';       // Reusable presentational helper functions.
 require_once WCBD_CAMPUSSIAN_DIR . 'inc/template-functions.php';  // Body classes, filters and misc hooks.
+require_once WCBD_CAMPUSSIAN_DIR . 'inc/admission.php';           // Admission form AJAX + admin workflow.
+require_once WCBD_CAMPUSSIAN_DIR . 'inc/login.php';               // Portal login handler + account menu.
 
 

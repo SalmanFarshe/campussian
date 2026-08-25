@@ -211,51 +211,49 @@ body.cmpsian-theme {
 	transform: translateY(-2px);
 }
 
-.cmpsian-btn--teal {
-	background: var(--cmpsian-teal);
-	color: #fff;
-}
-
-.cmpsian-btn--teal:hover {
-	background: var(--cmpsian-teal-600);
-	color: #fff;
-}
-
-.cmpsian-btn--orange {
-	background: var(--cmpsian-orange);
-	color: #fff;
-}
-
-.cmpsian-btn--orange:hover {
-	background: #d97a20;
-	color: #fff;
-}
-
+/* Primary style: orange bg, white text; hover flips to white bg + orange text. */
+.cmpsian-btn--orange,
+.cmpsian-btn--teal,
 .cmpsian-btn--green {
-	background: var(--cmpsian-green);
-	color: #fff;
+	background: var(--cmpsian-orange);
+	color: #ffffff;
 }
 
+.cmpsian-btn--orange:hover,
+.cmpsian-btn--teal:hover,
+.cmpsian-btn--green:hover {
+	background: #ffffff;
+	color: var(--cmpsian-orange);
+	box-shadow: 0 8px 20px rgba(237, 139, 49, .25);
+}
+
+/* Outline style: transparent bg, orange border + text; hover fills orange. */
+.cmpsian-btn--outline,
 .cmpsian-btn--ghost {
 	background: transparent;
-	border-color: rgba(255, 255, 255, .7);
-	color: #fff;
+	border-color: var(--cmpsian-orange);
+	color: var(--cmpsian-orange);
 }
 
+.cmpsian-btn--outline:hover,
 .cmpsian-btn--ghost:hover {
-	background: #fff;
-	color: var(--cmpsian-teal);
+	background: var(--cmpsian-orange);
+	border-color: var(--cmpsian-orange);
+	color: #ffffff;
+	box-shadow: 0 8px 20px rgba(237, 139, 49, .25);
 }
 
-.cmpsian-btn--outline {
+/* Green outline variant (border/color green; hover fills green with white text). */
+.cmpsian-btn--outline-green {
 	background: transparent;
-	border-color: var(--cmpsian-teal);
-	color: var(--cmpsian-teal);
+	border-color: var(--cmpsian-green);
+	color: var(--cmpsian-green);
 }
 
-.cmpsian-btn--outline:hover {
-	background: var(--cmpsian-teal);
-	color: #fff;
+.cmpsian-btn--outline-green:hover {
+	background: var(--cmpsian-green);
+	border-color: var(--cmpsian-green);
+	color: #ffffff;
 }
 
 .cmpsian-btn--sm {
@@ -289,8 +287,8 @@ body.cmpsian-theme {
  * 4. Utility bar
  * ========================================================================== */
 .cmpsian-utility-bar {
-	background: var(--cmpsian-teal-dark);
-	color: rgba(255, 255, 255, .85);
+	background: linear-gradient(90deg, var(--cmpsian-orange), #f39c4b);
+	color: #ffffff;
 	font-size: .85rem;
 }
 
@@ -313,11 +311,12 @@ body.cmpsian-theme {
 	display: inline-flex;
 	align-items: center;
 	gap: 7px;
-	color: rgba(255, 255, 255, .85);
+	color: #ffffff;
+	font-weight: 500;
 }
 
 .cmpsian-utility-item:hover {
-	color: var(--cmpsian-orange);
+	color: #fff3e6;
 }
 
 .cmpsian-utility-item__icon {
@@ -340,17 +339,19 @@ body.cmpsian-theme {
 	display: inline-flex;
 	align-items: center;
 	justify-content: center;
-	width: 28px;
-	height: 28px;
-	border-radius: 50%;
-	background: rgba(255, 255, 255, .12);
-	color: #fff;
+	width: 30px;
+	height: 30px;
+	border-radius: 8px;
+	background: rgba(255, 255, 255, .18);
+	color: #ffffff;
+	border: 1px solid rgba(255, 255, 255, .35);
+	transition: transform .2s ease, background-color .2s ease, color .2s ease;
 }
 
 .cmpsian-social:hover {
-	background: var(--cmpsian-orange);
-	color: #fff;
-	transform: translateY(-2px);
+	background: #ffffff;
+	color: var(--cmpsian-orange);
+	transform: translateY(-3px);
 }
 
 /* ========================================================================== *
@@ -411,10 +412,35 @@ body.cmpsian-theme {
 	border-radius: 8px;
 }
 
+.cmpsian-menu a {
+	position: relative;
+	padding-bottom: 14px;
+}
+
 .cmpsian-menu a:hover,
 .cmpsian-menu .current-menu-item > a {
-	color: var(--cmpsian-teal);
-	background: var(--cmpsian-bg-alt);
+	color: var(--cmpsian-orange);
+	background: transparent;
+}
+
+/* Animated orange underline on hover / active. */
+.cmpsian-menu a::after {
+	content: '';
+	position: absolute;
+	left: 16px;
+	right: 16px;
+	bottom: 6px;
+	height: 2px;
+	background: var(--cmpsian-orange);
+	border-radius: 2px;
+	transform: scaleX(0);
+	transform-origin: left;
+	transition: transform .25s ease;
+}
+
+.cmpsian-menu a:hover::after,
+.cmpsian-menu .current-menu-item > a::after {
+	transform: scaleX(1);
 }
 
 /* Sub menus. */
@@ -531,8 +557,307 @@ body.cmpsian-theme {
 	background-position: center;
 }
 
-.cmpsian-hero__inner {
+.cmpsian-hero__content {
 	max-width: 720px;
+	position: relative;
+	z-index: 10;
+}
+
+.cmpsian-facilities__grid,
+.cmpsian-teachers__grid,
+.cmpsian-alumni__grid {
+	display: grid;
+	grid-template-columns: repeat(1, 1fr);
+	gap: 24px;
+}
+
+@media (min-width: 768px) {
+	.cmpsian-facilities__grid,
+	.cmpsian-teachers__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 992px) {
+	.cmpsian-facilities__grid,
+	.cmpsian-teachers__grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
+
+	.cmpsian-alumni__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 1200px) {
+	.cmpsian-alumni__grid {
+		grid-template-columns: repeat(4, 1fr);
+	}
+}
+
+.cmpsian-facility__card,
+.cmpsian-teacher__card,
+.cmpsian-alumni__card {
+	background: var(--cmpsian-surface);
+	border: 1px solid var(--cmpsian-border);
+	border-radius: var(--cmpsian-radius);
+	box-shadow: var(--cmpsian-shadow-sm);
+	overflow: hidden;
+	height: 100%;
+}
+
+.cmpsian-facility__image {
+	background-size: cover;
+	background-position: center;
+	padding-top: 60%; /* Aspect ratio for images */
+	position: relative;
+}
+
+.cmpsian-facility__overlay {
+	position: absolute;
+	inset: 0;
+	background: linear-gradient(rgba(4, 58, 52, .7), rgba(4, 58, 52, .5));
+}
+
+.cmpsian-facility__content {
+	padding: 24px;
+}
+
+.cmpsian-facility__title {
+	font-size: 1.15rem;
+	margin: 0 0 8px;
+}
+
+.cmpsian-facility__description {
+	color: var(--cmpsian-text-muted);
+	font-size: .92rem;
+	margin: 0;
+}
+
+.cmpsian-teacher__photo {
+	width: 120px;
+	height: 120px;
+	border-radius: 50%;
+	overflow: hidden;
+	margin: 24px auto 16px;
+	background: var(--cmpsian-bg-alt);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--cmpsian-teal);
+	font-size: 3rem;
+}
+
+.cmpsian-teacher__photo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.cmpsian-teacher__details {
+	padding: 0 24px 24px;
+	text-align: center;
+}
+
+.cmpsian-teacher__name {
+	font-size: 1.1rem;
+	margin: 0 0 4px;
+}
+
+.cmpsian-teacher__designation {
+	color: var(--cmpsian-orange);
+	font-size: .9rem;
+	margin: 0 0 6px;
+}
+
+.cmpsian-teacher__qualification {
+	color: var(--cmpsian-text-muted);
+	font-size: .85rem;
+	margin: 0 0 16px;
+}
+
+.cmpsian-teacher__social {
+	display: flex;
+	justify-content: center;
+	gap: 8px;
+}
+
+.cmpsian-teacher__card--link {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+	transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.cmpsian-teacher__card--link:hover {
+	transform: translateY(-5px);
+	box-shadow: var(--cmpsian-shadow);
+	color: inherit;
+}
+
+.cmpsian-teacher__view-profile {
+	display: inline-block;
+	margin-top: 6px;
+	color: var(--cmpsian-teal);
+	font-family: var(--cmpsian-font-head);
+	font-weight: 600;
+	font-size: .88rem;
+}
+
+.cmpsian-teachers__footer {
+	display: flex;
+	justify-content: center;
+	margin-top: 40px;
+}
+
+/* Single Teacher Profile */
+.cmpsian-teacher-profile {
+	background: var(--cmpsian-surface);
+	border: 1px solid var(--cmpsian-border);
+	border-radius: var(--cmpsian-radius);
+	box-shadow: var(--cmpsian-shadow-sm);
+	padding: clamp(24px, 4vw, 44px);
+	margin-block: 30px;
+}
+
+.cmpsian-teacher-profile__card {
+	display: flex;
+	gap: 28px;
+	align-items: center;
+	flex-wrap: wrap;
+	padding-bottom: 28px;
+	border-bottom: 1px solid var(--cmpsian-border);
+	margin-bottom: 28px;
+}
+
+.cmpsian-teacher-profile__photo {
+	width: 180px;
+	height: 180px;
+	border-radius: 50%;
+	overflow: hidden;
+	background: var(--cmpsian-bg-alt);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--cmpsian-teal);
+	font-size: 4rem;
+	flex: none;
+}
+
+.cmpsian-teacher-profile__photo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.cmpsian-teacher-profile__name {
+	font-size: 1.6rem;
+	margin: 0 0 4px;
+}
+
+.cmpsian-teacher-profile__designation {
+	color: var(--cmpsian-orange);
+	margin: 0 0 6px;
+	font-weight: 600;
+}
+
+.cmpsian-teacher-profile__qualification {
+	color: var(--cmpsian-text-muted);
+	margin: 0 0 14px;
+}
+
+.cmpsian-teacher-profile__social {
+	display: flex;
+	gap: 8px;
+}
+
+.cmpsian-teacher-profile__social .cmpsian-social {
+	background: rgba(5, 123, 109, .1);
+	border-color: transparent;
+	color: var(--cmpsian-teal);
+}
+
+.cmpsian-teacher-profile__social .cmpsian-social:hover {
+	background: var(--cmpsian-teal);
+	color: #fff;
+}
+
+.cmpsian-teacher-profile__bio h3 {
+	font-size: 1.2rem;
+	margin: 0 0 12px;
+}
+
+.cmpsian-teacher-profile__bio p {
+	color: var(--cmpsian-text-muted);
+}
+
+.cmpsian-alumni__card--link {
+	display: block;
+	color: inherit;
+	text-decoration: none;
+	transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.cmpsian-alumni__card--link:hover {
+	transform: translateY(-5px);
+	box-shadow: var(--cmpsian-shadow);
+	color: inherit;
+}
+
+.cmpsian-alumni__photo {
+	width: 100px;
+	height: 100px;
+	border-radius: 50%;
+	overflow: hidden;
+	margin: 24px auto 12px;
+	position: relative;
+	background: var(--cmpsian-bg-alt);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	color: var(--cmpsian-teal);
+	font-size: 2.5rem;
+}
+
+.cmpsian-alumni__photo img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+}
+
+.cmpsian-alumni__year {
+	position: absolute;
+	bottom: 0;
+	right: 0;
+	background: var(--cmpsian-orange);
+	color: #fff;
+	font-size: .75rem;
+	padding: 4px 8px;
+	border-radius: 8px 0 0 0;
+}
+
+.cmpsian-alumni__details {
+	padding: 0 20px 20px;
+	text-align: center;
+}
+
+.cmpsian-alumni__name {
+	font-size: 1rem;
+	font-weight: 600;
+	margin: 0 0 4px;
+}
+
+.cmpsian-alumni__institution {
+	color: var(--cmpsian-teal);
+	font-size: .88rem;
+	margin: 0 0 12px;
+}
+
+.cmpsian-alumni__testimonial {
+	font-size: .92rem;
+	color: var(--cmpsian-text-muted);
+	font-style: italic;
+	margin: 0;
 }
 
 .cmpsian-hero__eyebrow {
@@ -547,7 +872,7 @@ body.cmpsian-theme {
 }
 
 .cmpsian-hero__title {
-	color: #fff;
+	color: var(--cmpsian-orange);
 	font-size: clamp(2rem, 5vw, 3.4rem);
 	margin: 0 0 18px;
 }
@@ -1398,6 +1723,38 @@ body.cmpsian-theme {
 	background: var(--cmpsian-orange);
 }
 
+.cmpsian-lightbox__nav {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 48px;
+	height: 48px;
+	border: 0;
+	border-radius: 50%;
+	background: rgba(255, 255, 255, .12);
+	color: #fff;
+	font-size: 1.4rem;
+	cursor: pointer;
+	line-height: 1;
+	display: inline-flex;
+	align-items: center;
+	justify-content: center;
+	transition: background-color .2s ease, transform .2s ease;
+}
+
+.cmpsian-lightbox__nav:hover {
+	background: var(--cmpsian-orange);
+	transform: translateY(-50%) scale(1.08);
+}
+
+.cmpsian-lightbox__nav--prev {
+	left: 20px;
+}
+
+.cmpsian-lightbox__nav--next {
+	right: 20px;
+}
+
 /* ========================================================================== *
  * 14. Dashboard preview
  * ========================================================================== */
@@ -1475,7 +1832,49 @@ body.cmpsian-theme {
 	color: var(--cmpsian-text);
 	font-weight: 500;
 	cursor: default;
+	display: flex;
+	align-items: center;
+	gap: 10px;
+	text-decoration: none;
+	transition: background .15s ease, color .15s ease;
 }
+
+.cmpsian-portal__navic {
+	display: inline-flex;
+	width: 22px;
+	justify-content: center;
+	font-size: 14px;
+	opacity: .8;
+}
+
+.cmpsian-portal__navgroup {
+	font-size: .72rem;
+	text-transform: uppercase;
+	letter-spacing: .06em;
+	color: var(--cmpsian-text-muted);
+	margin: 18px 2px 6px;
+	padding-top: 12px;
+	border-top: 1px solid var(--cmpsian-border);
+}
+
+.cmpsian-portal__email {
+	display: block;
+	font-size: .78rem;
+	color: var(--cmpsian-text-muted);
+	word-break: break-all;
+}
+
+.cmpsian-portal__logout { margin-top: 18px; text-decoration: none; }
+.cmpsian-portal-panel--narrow { max-width: 520px; }
+.cmpsian-portal-actions { margin-top: 16px; }
+.cmpsian-alert {
+	padding: 12px 16px;
+	border-radius: var(--cmpsian-radius-sm, 10px);
+	margin-bottom: 16px;
+	font-size: .9rem;
+}
+.cmpsian-alert--ok { background: rgba(141, 173, 66, .12); color: var(--cmpsian-green, #8DAD42); border: 1px solid rgba(141, 173, 66, .4); }
+.cmpsian-alert--err { background: #fdecea; color: #b3261e; border: 1px solid #f5c6c2; }
 
 .cmpsian-portal__navlink.is-active,
 .cmpsian-portal__navlink:hover {
@@ -1686,6 +2085,22 @@ body.cmpsian-theme {
 .cmpsian-post-grid {
 	display: grid;
 	gap: 26px;
+}
+
+.cmpsian-news__grid {
+	grid-template-columns: 1fr;
+}
+
+@media (min-width: 768px) {
+	.cmpsian-news__grid {
+		grid-template-columns: repeat(2, 1fr);
+	}
+}
+
+@media (min-width: 992px) {
+	.cmpsian-news__grid {
+		grid-template-columns: repeat(3, 1fr);
+	}
 }
 
 .cmpsian-post-card {
@@ -2130,4 +2545,113 @@ body.cmpsian-theme {
 	* {
 		scroll-behavior: auto !important;
 	}
+}
+
+/* ============================================================
+ * Preloader
+ * ============================================================ */
+.cmpsian-preloader {
+	position: fixed;
+	inset: 0;
+	z-index: 9999;
+	background: var(--cmpsian-surface);
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	justify-content: center;
+	gap: 16px;
+	transition: opacity .4s ease, visibility .4s ease;
+}
+
+.cmpsian-preloader.is-hidden {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+.cmpsian-preloader__spinner {
+	width: 48px;
+	height: 48px;
+	border: 4px solid rgba(5, 123, 109, .15);
+	border-top-color: var(--cmpsian-orange);
+	border-radius: 50%;
+	animation: cmpsian-spin .8s linear infinite;
+}
+
+.cmpsian-preloader__brand {
+	font-family: var(--cmpsian-font-head);
+	font-weight: 700;
+	font-size: 1.1rem;
+	color: var(--cmpsian-heading);
+	letter-spacing: .03em;
+}
+
+@keyframes cmpsian-spin {
+	to { transform: rotate(360deg); }
+}
+
+/* ============================================================
+ * Safety net: prevent horizontal scroll & hide AOS sections
+ * ============================================================ */
+html, body { overflow-x: hidden; }
+.cmpsian-site { overflow-x: hidden; }
+[data-aos] { opacity: 1 !important; transform: none !important; }
+@media (prefers-reduced-motion: reduce) {
+	[data-aos] { opacity: 1 !important; transform: none !important; transition: none !important; }
+}
+
+/* ============================================================
+ * Account dropdown (header navigation)
+ * ============================================================ */
+.cmpsian-account-nav { align-items: center; }
+.cmpsian-navbar__account { display: inline-flex; align-items: center; }
+.cmpsian-account-link {
+	display: inline-flex;
+	align-items: center;
+	gap: .4rem;
+	color: var(--cmpsian-text, #1f2a28);
+	font-weight: 500;
+}
+.cmpsian-account-link:hover,
+.cmpsian-account-link:focus { color: var(--cmpsian-teal, #057B6D); }
+.cmpsian-account-link svg { opacity: .8; }
+
+/* Logged-out "Login" - a clean branded pill button. */
+.cmpsian-account-nav .cmpsian-account-login {
+	display: inline-flex;
+	align-items: center;
+	gap: .45rem;
+	padding: .5rem 1.15rem;
+	border-radius: 999px;
+	background: var(--cmpsian-teal, #057B6D);
+	color: #fff;
+	font-weight: 600;
+	font-size: .9rem;
+	line-height: 1;
+	text-decoration: none;
+	box-shadow: 0 4px 12px rgba(5, 123, 109, .25);
+	transition: background .18s ease, transform .18s ease, box-shadow .18s ease;
+}
+.cmpsian-account-nav .cmpsian-account-login:hover,
+.cmpsian-account-nav .cmpsian-account-login:focus {
+	background: var(--cmpsian-teal-dark, #043a34);
+	color: #fff;
+	transform: translateY(-1px);
+	box-shadow: 0 6px 16px rgba(5, 123, 109, .32);
+}
+.cmpsian-account-nav .cmpsian-account-login svg { opacity: .9; }
+
+.cmpsian-account-dropdown { border-radius: var(--cmpsian-radius-sm, 10px); }
+.cmpsian-account-name { font-weight: 600; color: var(--cmpsian-teal, #057B6D); }
+.cmpsian-account-role {
+	font-size: .78rem;
+	text-transform: uppercase;
+	letter-spacing: .04em;
+	color: var(--cmpsian-text-muted, #5d6b68);
+}
+.cmpsian-account-logout { color: #b3261e; }
+@media (max-width: 991.98px) {
+	.cmpsian-navbar__account,
+	.cmpsian-account-nav { width: 100%; }
+	.cmpsian-account-dropdown { position: static; float: none; width: 100%; box-shadow: none; border: 0; }
 }
