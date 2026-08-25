@@ -27,6 +27,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 <body <?php body_class(); ?>>
 <?php wp_body_open(); ?>
 
+<?php if ( cmpsian_get_option( 'cmpsian_preloader_enable' ) ) : ?>
+	<div id="cmpsianPreloader" class="cmpsian-preloader" aria-hidden="true">
+		<div class="cmpsian-preloader__spinner" aria-label="Loading"></div>
+		<span class="cmpsian-preloader__brand"><?php bloginfo( 'name' ); ?></span>
+	</div>
+<?php endif; ?>
+
 <a class="cmpsian-skip-link screen-reader-text" href="#content">
 	<?php esc_html_e( 'Skip to content', 'campussian' ); ?>
 </a>

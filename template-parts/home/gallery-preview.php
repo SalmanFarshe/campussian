@@ -2,9 +2,10 @@
 /**
  * Gallery preview.
  *
- * A compact preview strip of campus-life images. Pulls attachments from a page
- * titled "Gallery" if one exists; otherwise renders styled placeholder tiles so
- * the section never looks empty on a fresh install.
+ * A compact preview strip of campus-life images. Pulls images from the
+ * `cmpsian_gallery` custom post type (admin-managed) if images exist;
+ * otherwise renders styled placeholder tiles so the section never looks
+ * empty on a fresh install.
  *
  * @package Campussian
  * @author  WhyCodeBD
@@ -16,18 +17,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-$gallery_page = get_page_by_path( 'gallery' );
-$gallery_url  = $gallery_page ? get_permalink( $gallery_page ) : '';
-
-// Attempt to gather up to 6 images from the gallery page.
-$images = array();
-if ( $gallery_page ) {
-	$attachments = get_attached_media( 'image', $gallery_page->ID );
-	$attachments = array_slice( $attachments, 0, 6 );
-	foreach ( $attachments as $att ) {
-		$images[] = wp_get_attachment_image_url( $att->ID, 'cmpsian-card' );
-	}
-}
+// Pull up to 6 latest gallery images from the CPT.
+$gallery_query = new WP_Query(
+	array(
+		'post_type'      => 'cmpsian_gallery',
+		'posts_per_page' => 6,
+		'orderby'        => 'date',
+		'order'          => 'DESC',
+	)
+);
 ?>
 <section class="cmpsian-gallery-preview" id="gallery-preview">
 	<div class="container">
@@ -38,12 +36,16 @@ if ( $gallery_page ) {
 		</div>
 
 		<div class="cmpsian-gallery-grid" data-aos="fade-up">
-			<?php if ( ! empty( $images ) ) : ?>
-				<?php foreach ( $images as $i => $src ) : ?>
-					<figure class="cmpsian-gallery-grid__item" data-aos="fade-up" data-aos-delay="<?php echo esc_attr( $i * 60 ); ?>">
-						<img src="<?php echo esc_url( $src ); ?>" alt="<?php esc_attr_e( 'Campus life photo', 'campussian' ); ?>" loading="lazy" />
+	<?php if ( $gallery_query->have_posts() ) : ?>
+		<?php $idx = 0; ?>
+		<?php while ( $gallery_query->have_posts() ) : $gallery_query->the_post(); ?>
+			<figure class="cmpsian-gallery-grid__item" data-aos="fade-up" data-aos-delay="<?php echo esc_attr( ( $idx++ % 4 ) * 60 ); ?>">
+						<img src="<?php echo esc_url( get_the_post_thumbnail_url() ); ?>"
+							alt="<?php esc_attr_e( 'Campus life photo', 'campussian' ); ?>"
+							loading="lazy" />
 					</figure>
-				<?php endforeach; ?>
+				<?php endwhile; ?>
+				<?php wp_reset_postdata(); ?>
 			<?php else : ?>
 				<?php for ( $i = 0; $i < 6; $i++ ) : ?>
 					<figure class="cmpsian-gallery-grid__item cmpsian-gallery-grid__item--placeholder" data-aos="fade-up" data-aos-delay="<?php echo esc_attr( $i * 60 ); ?>">
@@ -55,9 +57,9 @@ if ( $gallery_page ) {
 			<?php endif; ?>
 		</div>
 
-		<?php if ( $gallery_url ) : ?>
+		<?php if ( $gallery_query->have_posts() ) : ?>
 			<div class="text-center" data-aos="fade-up">
-				<a class="cmpsian-btn cmpsian-btn--outline" href="<?php echo esc_url( $gallery_url ); ?>">
+<a class="cmpsian-btn cmpsian-btn--outline" href="<?php echo esc_url( home_url( '/gallery/' ) ); ?>">
 					<?php esc_html_e( 'View Full Gallery', 'campussian' ); ?>
 				</a>
 			</div>

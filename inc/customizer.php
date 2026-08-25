@@ -43,6 +43,25 @@ function cmpsian_sanitize_marquee_source( $value ) {
 	return in_array( $value, $choices, true ) ? $value : 'notices';
 }
 
+/**
+ * Sanitise the sections order input.
+ *
+ * @since 1.0.0
+ * @param string $value Raw value.
+ * @return string
+ */
+function cmpsian_sections_order_sanitize( $value ) {
+	$allowed = array( 'hero', 'principal', 'news', 'notices_events', 'stats_counter', 'admission_cta', 'gallery_preview', 'facilities', 'teachers', 'alumni' );
+	$parts = array_map( 'trim', explode( ',', $value ) );
+	$sanitized = array();
+	foreach ( $parts as $part ) {
+		if ( in_array( $part, $allowed, true ) ) {
+			$sanitized[] = $part;
+		}
+	}
+	return implode( ',', $sanitized );
+}
+
 /* ========================================================================== *
  * Registration
  * ========================================================================== */
@@ -478,6 +497,180 @@ function cmpsian_customize_register( $wp_customize ) {
 			'description' => esc_html__( 'Leave blank to use the default. Use {year} for the current year.', 'campussian' ),
 			'section'     => 'cmpsian_footer',
 			'type'        => 'text',
+		)
+	);
+
+	/* ================================================================ *
+	 * SECTION 10 — Preloader
+	 * ================================================================ */
+	$wp_customize->add_section(
+		'cmpsian_preloader',
+		array(
+			'title'       => esc_html__( 'Preloader', 'campussian' ),
+			'description' => esc_html__( 'Control the page loading animation shown before the site is ready.', 'campussian' ),
+			'panel'       => 'cmpsian_panel',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'cmpsian_preloader_enable',
+		array(
+			'default'           => $defaults['cmpsian_preloader_enable'],
+			'sanitize_callback' => 'cmpsian_sanitize_checkbox',
+		)
+	);
+	$wp_customize->add_control(
+		'cmpsian_preloader_enable',
+		array(
+			'label'       => esc_html__( 'Enable Preloader', 'campussian' ),
+			'description' => esc_html__( 'Show the branded loading spinner while the page loads.', 'campussian' ),
+			'section'     => 'cmpsian_preloader',
+			'type'        => 'checkbox',
+		)
+	);
+
+	/* ================================================================ *
+	 * SECTION 11 — Homepage Sections
+	 * ================================================================ */
+	$wp_customize->add_section(
+		'cmpsian_homepage_sections',
+		array(
+			'title' => esc_html__( 'Homepage Sections', 'campussian' ),
+			'panel' => 'cmpsian_panel',
+		)
+	);
+
+	// Section visibility toggles.
+	$section_toggles = array(
+		'cmpsian_sections_enable_hero'             => esc_html__( 'Hero Section', 'campussian' ),
+		'cmpsian_sections_enable_principal'        => esc_html__( 'Principal & Overview', 'campussian' ),
+		'cmpsian_sections_enable_news'             => esc_html__( 'News Section', 'campussian' ),
+		'cmpsian_sections_enable_notices_events'   => esc_html__( 'Notices & Events', 'campussian' ),
+		'cmpsian_sections_enable_stats_counter'    => esc_html__( 'Statistics Counter', 'campussian' ),
+		'cmpsian_sections_enable_admission_cta'    => esc_html__( 'Admission CTA', 'campussian' ),
+		'cmpsian_sections_enable_gallery_preview'  => esc_html__( 'Gallery Preview', 'campussian' ),
+		'cmpsian_sections_enable_facilities'       => esc_html__( 'Facilities', 'campussian' ),
+		'cmpsian_sections_enable_teachers'         => esc_html__( 'Teachers', 'campussian' ),
+		'cmpsian_sections_enable_alumni'           => esc_html__( 'Alumni', 'campussian' ),
+	);
+
+	foreach ( $section_toggles as $id => $label ) {
+		$wp_customize->add_setting(
+			$id,
+			array(
+				'default'           => true,
+				'sanitize_callback' => 'cmpsian_sanitize_checkbox',
+			)
+		);
+		$wp_customize->add_control(
+			$id,
+			array(
+				'label'   => $label,
+				'section' => 'cmpsian_homepage_sections',
+				'type'    => 'checkbox',
+			)
+		);
+	}
+
+	// Section ordering control.
+	$wp_customize->add_setting(
+		'cmpsian_sections_order',
+		array(
+			'default'           => 'hero,principal,news,notices_events,stats_counter,admission_cta,gallery_preview,facilities,teachers,alumni',
+			'sanitize_callback' => 'cmpsian_sections_order_sanitize',
+		)
+	);
+	$wp_customize->add_control(
+		'cmpsian_sections_order',
+		array(
+			'label'       => esc_html__( 'Homepage Section Order', 'campussian' ),
+			'section'     => 'cmpsian_homepage_sections',
+			'type'        => 'text',
+			'description' => esc_html__( 'Comma-separated list of section IDs to control display order. Example: hero,principal,facilities,teachers,alumni,gallery_preview', 'campussian' ),
+		)
+	);
+
+	/* ================================================================ *
+	 * SECTION 12 — Facilities (content managed via CPT)
+	 * ================================================================ */
+	$wp_customize->add_section(
+		'cmpsian_facilities',
+		array(
+			'title'       => esc_html__( 'Facilities', 'campussian' ),
+			'description' => esc_html__( 'Add facilities under the "Facilities" menu in the admin. This only controls the section heading.', 'campussian' ),
+			'panel'       => 'cmpsian_panel',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'cmpsian_facilities_title',
+		array(
+			'default'           => isset( $defaults['cmpsian_facilities_title'] ) ? $defaults['cmpsian_facilities_title'] : 'Our Facilities',
+			'sanitize_callback' => 'sanitize_text_field',
+		)
+	);
+	$wp_customize->add_control(
+		'cmpsian_facilities_title',
+		array(
+			'label'   => esc_html__( 'Section Heading', 'campussian' ),
+			'section' => 'cmpsian_facilities',
+			'type'    => 'text',
+		)
+	);
+
+	/* ================================================================ *
+	 * SECTION 13 — Teachers (content managed via CPT)
+	 * ================================================================ */
+	$wp_customize->add_section(
+		'cmpsian_teachers',
+		array(
+			'title'       => esc_html__( 'Teachers', 'campussian' ),
+			'description' => esc_html__( 'Add teachers under the "Teachers" menu in the admin. This only controls the section heading.', 'campussian' ),
+			'panel'       => 'cmpsian_panel',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'cmpsian_teachers_title',
+		array(
+			'default'           => isset( $defaults['cmpsian_teachers_title'] ) ? $defaults['cmpsian_teachers_title'] : 'Our Faculty',
+			'sanitize_callback' => 'sanitize_text_field',
+		)
+	);
+	$wp_customize->add_control(
+		'cmpsian_teachers_title',
+		array(
+			'label'   => esc_html__( 'Section Heading', 'campussian' ),
+			'section' => 'cmpsian_teachers',
+			'type'    => 'text',
+		)
+	);
+
+	/* ================================================================ *
+	 * SECTION 14 — Alumni (content managed via CPT)
+	 * ================================================================ */
+	$wp_customize->add_section(
+		'cmpsian_alumni',
+		array(
+			'title'       => esc_html__( 'Alumni', 'campussian' ),
+			'description' => esc_html__( 'Add alumni under the "Alumni" menu in the admin. This only controls the section heading.', 'campussian' ),
+			'panel'       => 'cmpsian_panel',
+		)
+	);
+
+	$wp_customize->add_setting(
+		'cmpsian_alumni_title',
+		array(
+			'default'           => isset( $defaults['cmpsian_alumni_title'] ) ? $defaults['cmpsian_alumni_title'] : 'Alumni Success',
+			'sanitize_callback' => 'sanitize_text_field',
+		)
+	);
+	$wp_customize->add_control(
+		'cmpsian_alumni_title',
+		array(
+			'label'   => esc_html__( 'Section Heading', 'campussian' ),
+			'section' => 'cmpsian_alumni',
+			'type'    => 'text',
 		)
 	);
 }

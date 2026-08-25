@@ -40,6 +40,10 @@ function cmpsian_enqueue_assets() {
 	// AOS - Animate On Scroll (local bundle).
 	wp_enqueue_style( 'aos', $css . 'aos.css', array(), '2.3.4' );
 
+	// Owl Carousel 2 - hero slideshow (local bundle, no CDN dependency).
+	wp_enqueue_style( 'owl-carousel', $css . 'owl.carousel.min.css', array(), '2.3.4' );
+	wp_enqueue_style( 'owl-carousel-theme', $css . 'owl.theme.default.min.css', array( 'owl-carousel' ), '2.3.4' );
+
 	// Google Fonts - Poppins (headings) + Inter (body). Loaded remotely only as
 	// a webfont; the theme still renders fully with the system-font fallback.
 	wp_enqueue_style(
@@ -53,7 +57,7 @@ function cmpsian_enqueue_assets() {
 	wp_enqueue_style(
 		'campussian-main',
 		$css . 'campussian.css',
-		array( 'bootstrap', 'aos' ),
+		array( 'bootstrap', 'aos', 'owl-carousel', 'owl-carousel-theme' ),
 		$ver
 	);
 
@@ -75,11 +79,14 @@ function cmpsian_enqueue_assets() {
 	// AOS library - loaded in the footer.
 	wp_enqueue_script( 'aos', $js . 'aos.js', array(), '2.3.4', true );
 
+	// Owl Carousel 2 - hero slideshow (local bundle, no CDN dependency).
+	wp_enqueue_script( 'owl-carousel', $js . 'owl.carousel.min.js', array( 'jquery' ), '2.3.4', true );
+
 	// Theme script: dark-mode toggle, AOS init, stat counters, notice modal.
 	wp_enqueue_script(
 		'campussian-main',
 		$js . 'campussian.js',
-		array( 'bootstrap', 'aos' ),
+		array( 'bootstrap', 'aos', 'owl-carousel' ),
 		$ver,
 		true
 	);

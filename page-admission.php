@@ -107,44 +107,49 @@ $fees = array(
 			</div>
 		</div>
 
-		<!-- Dummy application form (UI only) -->
+		<!-- Online application form (AJAX-backed, stored as a pending application) -->
 		<div class="cmpsian-card-block cmpsian-admission-form" data-aos="fade-up">
-			<h2 class="cmpsian-section__title"><?php esc_html_e( 'Online Application (Demo)', 'campussian' ); ?></h2>
-			<p class="cmpsian-admission-form__note"><?php esc_html_e( 'This is a front-end demo form for layout preview only — submissions are not processed.', 'campussian' ); ?></p>
+			<h2 class="cmpsian-section__title"><?php esc_html_e( 'Online Application', 'campussian' ); ?></h2>
+			<p class="cmpsian-admission-form__note"><?php esc_html_e( 'Complete the form below and our admission office will contact you shortly.', 'campussian' ); ?></p>
 
-			<form class="row g-3 cmpsian-form" onsubmit="return false;" novalidate>
+			<div id="cmpsian-admission-feedback" class="cmpsian-admission-feedback" aria-live="polite"></div>
+
+			<form id="cmpsian-admission-form" class="row g-3 cmpsian-form" method="post" novalidate>
+				<?php wp_nonce_field( 'cmpsian_admission_nonce', 'nonce' ); ?>
+
 				<div class="col-md-6">
-					<label class="form-label" for="cmpsian-af-name"><?php esc_html_e( "Student's Full Name", 'campussian' ); ?></label>
-					<input type="text" class="form-control" id="cmpsian-af-name" placeholder="<?php esc_attr_e( 'e.g. Ayaan Rahman', 'campussian' ); ?>" />
+					<label class="form-label" for="cmpsian-af-name"><?php esc_html_e( "Student's Full Name *", 'campussian' ); ?></label>
+					<input type="text" class="form-control" id="cmpsian-af-name" name="student_name"
+						placeholder="<?php esc_attr_e( 'e.g. Ayaan Rahman', 'campussian' ); ?>" required />
 				</div>
 				<div class="col-md-6">
 					<label class="form-label" for="cmpsian-af-dob"><?php esc_html_e( 'Date of Birth', 'campussian' ); ?></label>
-					<input type="date" class="form-control" id="cmpsian-af-dob" />
+					<input type="date" class="form-control" id="cmpsian-af-dob" name="dob" />
 				</div>
 				<div class="col-md-6">
-					<label class="form-label" for="cmpsian-af-grade"><?php esc_html_e( 'Grade Applying For', 'campussian' ); ?></label>
-					<select class="form-select" id="cmpsian-af-grade">
+					<label class="form-label" for="cmpsian-af-grade"><?php esc_html_e( 'Grade Applying For *', 'campussian' ); ?></label>
+					<select class="form-select" id="cmpsian-af-grade" name="grade" required>
 						<option value=""><?php esc_html_e( 'Select a grade', 'campussian' ); ?></option>
 						<?php foreach ( $fees as $row ) : ?>
-							<option><?php echo esc_html( $row['grade'] ); ?></option>
+							<option value="<?php echo esc_attr( $row['grade'] ); ?>"><?php echo esc_html( $row['grade'] ); ?></option>
 						<?php endforeach; ?>
 					</select>
 				</div>
 				<div class="col-md-6">
 					<label class="form-label" for="cmpsian-af-guardian"><?php esc_html_e( "Guardian's Name", 'campussian' ); ?></label>
-					<input type="text" class="form-control" id="cmpsian-af-guardian" />
+					<input type="text" class="form-control" id="cmpsian-af-guardian" name="guardian" />
 				</div>
 				<div class="col-md-6">
-					<label class="form-label" for="cmpsian-af-phone"><?php esc_html_e( 'Phone', 'campussian' ); ?></label>
-					<input type="tel" class="form-control" id="cmpsian-af-phone" />
+					<label class="form-label" for="cmpsian-af-phone"><?php esc_html_e( 'Phone *', 'campussian' ); ?></label>
+					<input type="tel" class="form-control" id="cmpsian-af-phone" name="phone" required />
 				</div>
 				<div class="col-md-6">
 					<label class="form-label" for="cmpsian-af-email"><?php esc_html_e( 'Email', 'campussian' ); ?></label>
-					<input type="email" class="form-control" id="cmpsian-af-email" />
+					<input type="email" class="form-control" id="cmpsian-af-email" name="email" />
 				</div>
 				<div class="col-12">
 					<label class="form-label" for="cmpsian-af-message"><?php esc_html_e( 'Message (optional)', 'campussian' ); ?></label>
-					<textarea class="form-control" id="cmpsian-af-message" rows="3"></textarea>
+					<textarea class="form-control" id="cmpsian-af-message" name="message" rows="3"></textarea>
 				</div>
 				<div class="col-12">
 					<button type="submit" class="cmpsian-btn cmpsian-btn--orange"><?php esc_html_e( 'Submit Application', 'campussian' ); ?></button>

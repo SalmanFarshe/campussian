@@ -78,9 +78,37 @@ if ( ! function_exists( 'cmpsian_default_options' ) ) {
 			'cmpsian_cta_btn'     => 'Start Application',
 			'cmpsian_cta_url'     => '#',
 
+			/* ---- Preloader -------------------------------------------- */
+			'cmpsian_preloader_enable' => true,
+
 			/* ---- Footer ---------------------------------------------- */
 			'cmpsian_footer_about'     => 'Campussian is a modern educational institution dedicated to academic excellence, character building and preparing students for a rapidly changing world.',
 			'cmpsian_copyright'        => '',
+
+			/* ---- Section Visibility Toggles ---- */
+			'cmpsian_sections_enable_hero'             => true,
+			'cmpsian_sections_enable_principal'        => true,
+			'cmpsian_sections_enable_news'             => true,
+			'cmpsian_sections_enable_notices_events'   => true,
+			'cmpsian_sections_enable_stats_counter'    => true,
+			'cmpsian_sections_enable_admission_cta'    => true,
+			'cmpsian_sections_enable_gallery_preview'  => true,
+			'cmpsian_sections_enable_facilities'       => true,
+			'cmpsian_sections_enable_teachers'         => true,
+			'cmpsian_sections_enable_alumni'           => true,
+
+			/* ---- News Defaults ---- */
+			'cmpsian_news_title'                       => 'Latest News',
+
+			/* ---- Facilities Defaults ---- */
+			'cmpsian_facilities_title'                 => 'Our Facilities',
+
+			/* ---- Teachers Defaults ---- */
+			'cmpsian_teachers_title'                   => 'Our Faculty',
+
+			/* ---- Alumni Defaults ---- */
+			'cmpsian_alumni_title'                     => 'Alumni Success',
+
 		);
 
 		/**

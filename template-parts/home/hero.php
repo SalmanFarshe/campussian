@@ -2,7 +2,7 @@
 /**
  * Homepage hero banner.
  *
- * Headline, subtext and the two call-to-action buttons ("Apply Now" / "Explore").
+ * A clean, reliable hero section with title, subtitle and CTA buttons.
  * Background image is optional and comes from the Customizer.
  *
  * @package Campussian
@@ -27,39 +27,35 @@ $style = $image ? ' style="background-image:linear-gradient(rgba(4,58,52,.82),rg
 ?>
 <section class="cmpsian-hero<?php echo $image ? ' cmpsian-hero--image' : ''; ?>"<?php echo $style; // phpcs:ignore -- URL escaped above. ?>>
 	<div class="container">
-		<div class="cmpsian-hero__inner">
+		<div class="cmpsian-hero__content">
+			<span class="cmpsian-hero__eyebrow">
+				<?php esc_html_e( 'Welcome to', 'campussian' ); ?> <?php echo esc_html( get_bloginfo( 'name' ) ); ?>
+			</span>
 
-			<div class="cmpsian-hero__content" data-aos="fade-up">
-				<span class="cmpsian-hero__eyebrow" data-aos="fade-up" data-aos-delay="50">
-					<?php esc_html_e( 'Welcome to', 'campussian' ); ?> <?php echo esc_html( get_bloginfo( 'name' ) ); ?>
-				</span>
+			<?php if ( $title ) : ?>
+				<h1 class="cmpsian-hero__title">
+					<?php echo esc_html( $title ); ?>
+				</h1>
+			<?php endif; ?>
 
-				<?php if ( $title ) : ?>
-					<h1 class="cmpsian-hero__title" data-aos="fade-up" data-aos-delay="100">
-						<?php echo esc_html( $title ); ?>
-					</h1>
+			<?php if ( $subtitle ) : ?>
+				<p class="cmpsian-hero__subtitle">
+					<?php echo esc_html( $subtitle ); ?>
+				</p>
+			<?php endif; ?>
+
+			<div class="cmpsian-hero__actions">
+				<?php if ( $btn1 ) : ?>
+					<a class="cmpsian-btn cmpsian-btn--orange" href="<?php echo esc_url( $btn1_url ); ?>">
+						<?php echo esc_html( $btn1 ); ?>
+					</a>
 				<?php endif; ?>
-
-				<?php if ( $subtitle ) : ?>
-					<p class="cmpsian-hero__subtitle" data-aos="fade-up" data-aos-delay="150">
-						<?php echo esc_html( $subtitle ); ?>
-					</p>
+				<?php if ( $btn2 ) : ?>
+					<a class="cmpsian-btn cmpsian-btn--ghost" href="<?php echo esc_url( $btn2_url ); ?>">
+						<?php echo esc_html( $btn2 ); ?>
+					</a>
 				<?php endif; ?>
-
-				<div class="cmpsian-hero__actions" data-aos="fade-up" data-aos-delay="200">
-					<?php if ( $btn1 ) : ?>
-						<a class="cmpsian-btn cmpsian-btn--orange" href="<?php echo esc_url( $btn1_url ); ?>">
-							<?php echo esc_html( $btn1 ); ?>
-						</a>
-					<?php endif; ?>
-					<?php if ( $btn2 ) : ?>
-						<a class="cmpsian-btn cmpsian-btn--ghost" href="<?php echo esc_url( $btn2_url ); ?>">
-							<?php echo esc_html( $btn2 ); ?>
-						</a>
-					<?php endif; ?>
-				</div>
 			</div>
-
 		</div>
 	</div>
 

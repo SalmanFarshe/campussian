@@ -19,7 +19,8 @@ Campussian (`cmpsian`) is a fast, accessible and fully self-contained WordPress 
 - **Events** (`page-events.php`) — tabbed **Upcoming / Past** grid driven by an event-date meta field.
 - **Admission** (`page-admission.php`) — criteria list, responsive fee-breakdown table and a demo application form.
 - **Gallery** (`page-gallery.php`) — masonry image grid with a dependency-free lightbox.
-- **Dashboard preview** (`page-dashboard-preview.php`) — a static student-portal UI mockup.
+- **Dashboard** (`page-dashboard.php`) — real, role-aware portal (student / teacher / guardian / principal / admin views). Requires the **campussian-core** plugin; shows an activation notice without it.
+- **Login** (`page-login.php`) — custom front-end login page.
 - **About / Contact** — mission-vision cards, contact cards, a demo contact form and an embedded map.
 - **Custom post types** — `Notices` and `Events`, each with their own meta boxes (date, PDF, venue).
 - **Powerful Customizer** — branding, hero, marquee, principal, statistics and admission CTA controls.
@@ -62,7 +63,7 @@ campussian/
 ├── page-events.php               # Upcoming / past events
 ├── page-admission.php            # Criteria, fees, demo form
 ├── page-gallery.php              # Masonry gallery + lightbox
-├── page-dashboard-preview.php    # Student portal mockup
+├── page-dashboard.php             # Real role-aware portal dashboard
 ├── page-about.php / page-contact.php
 │
 ├── inc/
