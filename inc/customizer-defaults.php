@@ -97,6 +97,9 @@ if ( ! function_exists( 'cmpsian_default_options' ) ) {
 			'cmpsian_sections_enable_teachers'         => true,
 			'cmpsian_sections_enable_alumni'           => true,
 
+			/* ---- Section Order ---- */
+			'cmpsian_sections_order'                   => 'hero,principal,news,notices_events,stats_counter,admission_cta,gallery_preview,facilities,teachers,alumni',
+
 			/* ---- News Defaults ---- */
 			'cmpsian_news_title'                       => 'Latest News',
 

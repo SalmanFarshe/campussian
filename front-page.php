@@ -18,27 +18,25 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 get_header();
 
-// 1. Get enabled sections and their order
-$enabled_sections = array();
-$sections_order = cmpsian_get_option( 'cmpsian_sections_order' );
-if ( $sections_order ) {
-	$enabled_sections = array_map( 'trim', explode( ',', $sections_order ) );
-} else {
-$enabled_sections = array( 'hero', 'principal', 'news', 'notices_events', 'stats_counter', 'admission_cta', 'gallery_preview', 'facilities', 'teachers', 'alumni' );
-}
+// 1. Get the section order (falls back to the default in cmpsian_default_options()).
+$sections_order   = cmpsian_get_option( 'cmpsian_sections_order' );
+$enabled_sections = array_map( 'trim', explode( ',', $sections_order ) );
 
-// Check each section enable status
+// 2. Resolve each section's visibility toggle (default to enabled).
 $section_status = array();
 foreach ( $enabled_sections as $section ) {
+	if ( $section === '' ) {
+		continue;
+	}
 	$section_status[ $section ] = cmpsian_get_option( "cmpsian_sections_enable_{$section}" );
-	if ( ! isset( $section_status[ $section ] ) ) {
-		$section_status[ $section ] = true; // default to enabled
+	if ( ! is_bool( $section_status[ $section ] ) ) {
+		$section_status[ $section ] = true; // default to enabled when not set.
 	}
 }
 ?>
 <main id="primary" class="cmpsian-main cmpsian-home">
   <?php foreach ( $enabled_sections as $section ) :
-    $is_enabled = ! empty( $section_status[ $section ] ) ? $section_status[ $section ] : true;
+    $is_enabled = isset( $section_status[ $section ] ) ? (bool) $section_status[ $section ] : true;
   ?>
     <?php if ( ! $is_enabled ) continue; ?>
     

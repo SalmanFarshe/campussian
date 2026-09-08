@@ -46,17 +46,24 @@ function cmpsian_sanitize_marquee_source( $value ) {
 /**
  * Sanitise the sections order input.
  *
+ * Whitelists each entry and keeps the user's chosen ordering of the valid ones.
+ * The whitelist is derived from the shared default order so it cannot drift
+ * from the section IDs used by the templates.
+ *
  * @since 1.0.0
  * @param string $value Raw value.
  * @return string
  */
 function cmpsian_sections_order_sanitize( $value ) {
-	$allowed = array( 'hero', 'principal', 'news', 'notices_events', 'stats_counter', 'admission_cta', 'gallery_preview', 'facilities', 'teachers', 'alumni' );
-	$parts = array_map( 'trim', explode( ',', $value ) );
+	$defaults = cmpsian_default_options();
+	$allowed  = explode( ',', $defaults['cmpsian_sections_order'] );
+	$parts    = array_map( 'trim', explode( ',', $value ) );
+	$seen     = array();
 	$sanitized = array();
 	foreach ( $parts as $part ) {
-		if ( in_array( $part, $allowed, true ) ) {
+		if ( in_array( $part, $allowed, true ) && ! in_array( $part, $seen, true ) ) {
 			$sanitized[] = $part;
+			$seen[]      = $part;
 		}
 	}
 	return implode( ',', $sanitized );
@@ -576,7 +583,7 @@ function cmpsian_customize_register( $wp_customize ) {
 	$wp_customize->add_setting(
 		'cmpsian_sections_order',
 		array(
-			'default'           => 'hero,principal,news,notices_events,stats_counter,admission_cta,gallery_preview,facilities,teachers,alumni',
+			'default'           => $defaults['cmpsian_sections_order'],
 			'sanitize_callback' => 'cmpsian_sections_order_sanitize',
 		)
 	);
