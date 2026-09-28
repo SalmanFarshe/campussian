@@ -2665,3 +2665,126 @@ html, body { overflow-x: hidden; }
 	.cmpsian-account-nav { width: 100%; }
 	.cmpsian-account-dropdown { position: static; float: none; width: 100%; box-shadow: none; border: 0; }
 }
+
+/* ==========================================================================
+ * WordPress core content classes (required for classic themes).
+ * ========================================================================== */
+
+/* Visible focus for screen-reader-only text (widgets, comments, search). */
+.screen-reader-text:focus {
+	clip: auto;
+	clip-path: none;
+	width: auto;
+	height: auto;
+	overflow: visible;
+	white-space: normal;
+	top: 5px;
+	left: 5px;
+	z-index: 100000;
+	background: #fff;
+	color: #1d2327;
+	padding: 10px 14px;
+	line-height: 1.4;
+	border: 2px solid var(--cmpsian-teal);
+	border-radius: 4px;
+	text-decoration: none;
+	font-size: 14px;
+}
+
+/* Image alignment classes. */
+img.alignleft,
+.wp-caption.alignleft {
+	float: left;
+	margin: 6px 24px 18px 0;
+}
+
+img.alignright,
+.wp-caption.alignright {
+	float: right;
+	margin: 6px 0 18px 24px;
+}
+
+img.aligncenter,
+.wp-caption.aligncenter {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+img.alignnone,
+.wp-caption.alignnone {
+	display: block;
+}
+
+/* Wide + full alignment (add_theme_support 'align-wide'). */
+.alignwide {
+	margin-left: calc( 50% - 50vw );
+	margin-right: calc( 50% - 50vw );
+	width: auto;
+	max-width: 100%;
+}
+
+.alignfull {
+	margin-left: calc( 50% - 50vw );
+	margin-right: calc( 50% - 50vw );
+	width: 100vw;
+	max-width: 100vw;
+}
+
+/* Image captions. */
+.wp-caption {
+	max-width: 100%;
+	margin-bottom: 1.5em;
+}
+
+.wp-caption img {
+	display: block;
+	margin: 0 auto;
+}
+
+.wp-caption-text,
+.wp-block-image figcaption,
+figcaption {
+	text-align: center;
+	font-size: 0.875em;
+	line-height: 1.6;
+	color: var(--cmpsian-muted, #5b6472);
+	margin-top: 0.5em;
+}
+
+.gallery-caption {
+	display: block;
+	font-size: 0.875em;
+	line-height: 1.6;
+	margin-top: 0.5em;
+	color: var(--cmpsian-muted, #5b6472);
+}
+
+/* Author markup on single posts. */
+.bypostauthor > .comment-body {
+	border-left: 3px solid var(--cmpsian-teal);
+	padding-left: 18px;
+}
+
+/* ==========================================================================
+ * Full Width page template (page-templates/full-width.php)
+ * ========================================================================== */
+.cmpsian-container-fluid {
+	width: 100%;
+	max-width: 100%;
+	padding: 0 24px;
+	margin: 0 auto;
+}
+
+.cmpsian-main--full .cmpsian-page--full {
+	max-width: 1440px;
+	margin: 0 auto;
+}
+
+@media (max-width: 767.98px) {
+	.cmpsian-container-fluid {
+		padding: 0 18px;
+	}
+}
+
+

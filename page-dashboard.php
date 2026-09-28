@@ -2,19 +2,12 @@
 /**
  * Template Name: Dashboard (Portal)
  *
- * The real, role-aware portal dashboard. Replaces the old static preview.
- *
- * Guards:
- *  1. Without the "campussian-core" plugin the dashboard does not render -
- *     an access-restriction alert is shown instead.
- *  2. Logged-out visitors are redirected to the Login page.
- *  3. Content is rendered per role (student / teacher / guardian /
- *     principal / school_admin / system_admin) using real data from the
- *     linked cmpsian_student / cmpsian_teacher records.
+ * Front-end portal dashboard. Requires the (optional, recommended)
+ * "Campussian Core" plugin for role-aware data; without it a friendly
+ * locked message is shown instead of an error.
  *
  * @package Campussian
- * @author  Salman Farshe
- * @since   1.1.0
+ * @since   1.0.0
  */
 
 // Exit if accessed directly.

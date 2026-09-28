@@ -97,7 +97,7 @@ function cmpsian_customize_register( $wp_customize ) {
 		'cmpsian_panel',
 		array(
 			'title'       => esc_html__( 'Campussian Options', 'campussian' ),
-			'description' => esc_html__( 'Theme-wide settings for the Campussian school theme by WhyCodeBD.', 'campussian' ),
+			'description' => esc_html__( 'Theme-wide settings for the Campussian school theme.', 'campussian' ),
 			'priority'    => 10,
 		)
 	);

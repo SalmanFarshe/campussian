@@ -94,10 +94,9 @@ $has_cols = is_active_sidebar( 'footer-1' ) || is_active_sidebar( 'footer-2' )
 				<p class="cmpsian-footer__credit">
 					<?php
 					printf(
-						/* translators: 1: WhyCodeBD author link, 2: developer link. */
-						esc_html__( 'Theme by %1$s — Developed by %2$s', 'campussian' ),
-						'<a href="https://salmanfarshe.me" target="_blank" rel="noopener noreferrer">WhyCodeBD</a>',
-						'<a href="https://salmanfarshe.me" target="_blank" rel="noopener noreferrer">Salman Farshe</a>'
+						/* translators: %s: site name. */
+						esc_html__( 'Powered by %s', 'campussian' ),
+						esc_html( get_bloginfo( 'name' ) )
 					);
 					?>
 				</p>

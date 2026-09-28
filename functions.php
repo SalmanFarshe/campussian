@@ -51,10 +51,11 @@ require_once WCBD_CAMPUSSIAN_DIR . 'inc/setup.php';               // Theme suppo
 require_once WCBD_CAMPUSSIAN_DIR . 'inc/enqueue.php';             // Register & enqueue styles and scripts.
 require_once WCBD_CAMPUSSIAN_DIR . 'inc/customizer-defaults.php'; // Default values + cmpsian_get_option() helper.
 require_once WCBD_CAMPUSSIAN_DIR . 'inc/customizer.php';          // Customizer panels, sections and controls.
-require_once WCBD_CAMPUSSIAN_DIR . 'inc/cpt.php';                 // Notice & Event custom post types + meta.
+require_once WCBD_CAMPUSSIAN_DIR . 'inc/cpt.php';                 // CPT meta boxes (types themselves live in campussian-core).
 require_once WCBD_CAMPUSSIAN_DIR . 'inc/template-tags.php';       // Reusable presentational helper functions.
 require_once WCBD_CAMPUSSIAN_DIR . 'inc/template-functions.php';  // Body classes, filters and misc hooks.
 require_once WCBD_CAMPUSSIAN_DIR . 'inc/admission.php';           // Admission form AJAX + admin workflow.
 require_once WCBD_CAMPUSSIAN_DIR . 'inc/login.php';               // Portal login handler + account menu.
+require_once WCBD_CAMPUSSIAN_DIR . 'inc/tgm.php';                 // TGMPA plugin recommendation & installation.
 
 

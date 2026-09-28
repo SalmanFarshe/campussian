@@ -59,7 +59,7 @@ get_header();
 
 						<?php if ( $year ) : ?>
 							<p class="cmpsian-teacher-profile__designation">
-								<?php echo esc_html( sprintf( __( 'Class of %s', 'campussian' ), $year ) ); ?>
+								<?php /* translators: %s: graduation year. */ echo esc_html( sprintf( __( 'Class of %s', 'campussian' ), $year ) ); ?>
 							</p>
 						<?php endif; ?>
 

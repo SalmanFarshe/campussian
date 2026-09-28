@@ -90,7 +90,7 @@ $map_src   = 'https://www.google.com/maps?q=' . $map_query . '&output=embed';
 				<div class="cmpsian-card-block">
 					<h2 class="cmpsian-section__title"><?php esc_html_e( 'Send Us a Message', 'campussian' ); ?></h2>
 					<p class="cmpsian-form__note"><?php esc_html_e( 'Demo form — for layout preview only. Messages are not sent.', 'campussian' ); ?></p>
-					<form class="row g-3 cmpsian-form" onsubmit="return false;" novalidate>
+					<form class="row g-3 cmpsian-form" action="#" method="post" data-cmpsian-demo-form novalidate>
 						<div class="col-md-6">
 							<label class="form-label" for="cmpsian-cf-name"><?php esc_html_e( 'Your Name', 'campussian' ); ?></label>
 							<input type="text" class="form-control" id="cmpsian-cf-name" />

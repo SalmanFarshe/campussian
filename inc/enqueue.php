@@ -44,20 +44,20 @@ function cmpsian_enqueue_assets() {
 	wp_enqueue_style( 'owl-carousel', $css . 'owl.carousel.min.css', array(), '2.3.4' );
 	wp_enqueue_style( 'owl-carousel-theme', $css . 'owl.theme.default.min.css', array( 'owl-carousel' ), '2.3.4' );
 
-	// Google Fonts - Poppins (headings) + Inter (body). Loaded remotely only as
-	// a webfont; the theme still renders fully with the system-font fallback.
+	// Self-hosted webfonts (Inter + Poppins). Bundled locally so the theme
+	// makes no external requests.
 	wp_enqueue_style(
 		'cmpsian-fonts',
-		'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@500;600;700;800&display=swap',
+		$css . 'campussian-fonts.css',
 		array(),
-		null
+		$ver
 	);
 
 	// Main theme stylesheet (depends on Bootstrap so our overrides win).
 	wp_enqueue_style(
 		'campussian-main',
 		$css . 'campussian.css',
-		array( 'bootstrap', 'aos', 'owl-carousel', 'owl-carousel-theme' ),
+		array( 'cmpsian-fonts', 'bootstrap', 'aos', 'owl-carousel', 'owl-carousel-theme' ),
 		$ver
 	);
 

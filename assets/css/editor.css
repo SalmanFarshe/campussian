@@ -1,0 +1,63 @@
+/**
+ * Block editor styles for the Campussian theme.
+ *
+ * Loaded through add_editor_style() (see inc/setup.php) alongside the
+ * self-hosted webfont declarations, so the editor matches the front end
+ * without pulling in the full front-end stylesheet.
+ */
+
+:root {
+	--cmpsian-font-body: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+	--cmpsian-font-head: 'Poppins', var(--cmpsian-font-body);
+	--cmpsian-teal: #057b6d;
+	--cmpsian-accent: #8dad42;
+	--cmpsian-orange: #ed8b31;
+}
+
+body,
+.editor-styles-wrapper {
+	font-family: var(--cmpsian-font-body);
+	font-size: 17px;
+	line-height: 1.7;
+	color: #1d2327;
+	background: #ffffff;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+.wp-block-heading,
+.editor-post-title__input {
+	font-family: var(--cmpsian-font-head);
+	line-height: 1.25;
+	color: #10231f;
+}
+
+a {
+	color: var(--cmpsian-teal);
+}
+
+/* Match the theme's rounded, teal-toned buttons. */
+.wp-block-button__link {
+	background: var(--cmpsian-teal);
+	border: 0;
+	border-radius: 8px;
+	color: #ffffff;
+	font-weight: 600;
+	padding: 11px 22px;
+}
+
+.wp-block-quote {
+	border-left: 4px solid var(--cmpsian-teal);
+	padding-left: 18px;
+	font-style: normal;
+}
+
+.wp-block-code {
+	background: #f5f7f8;
+	border: 1px solid #e3e8ea;
+	border-radius: 6px;
+}

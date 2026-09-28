@@ -293,6 +293,20 @@
 		initCounters();
 		initLightbox();
 		initBackToTop();
+		initDemoForms();
+	}
+
+	/**
+	 * Prevent submission of the layout-only demo contact form.
+	 *
+	 * Keeps the glossary/demo markup inert without inline event handlers.
+	 */
+	function initDemoForms() {
+		document.querySelectorAll( '[data-cmpsian-demo-form]' ).forEach( function ( form ) {
+			form.addEventListener( 'submit', function ( event ) {
+				event.preventDefault();
+			} );
+		} );
 	}
 
 	if ( 'loading' === document.readyState ) {

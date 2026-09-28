@@ -72,6 +72,18 @@ if ( ! function_exists( 'cmpsian_setup' ) ) {
 		add_theme_support( 'responsive-embeds' );
 		add_theme_support( 'wp-block-styles' );
 
+		// Nested (threaded) comments.
+		add_theme_support( 'threaded-comments' );
+
+		// Editor stylesheet so the block editor matches the front end.
+		add_theme_support( 'editor-style' );
+		add_editor_style(
+			array(
+				'assets/css/campussian-fonts.css',
+				'assets/css/editor.css',
+			)
+		);
+
 		// Register navigation menus.
 		register_nav_menus(
 			array(
